@@ -509,7 +509,6 @@ class BattleshipGame {
         
         this.currentShip = null;
         this.draggedShip = null;
-        this.selectedAttackCell = null;
         this.orientation = 'horizontal';
         this.placementConfirmed = false;
         this.gameStarted = false;
@@ -585,8 +584,6 @@ class BattleshipGame {
         document.getElementById('confirm-placement').addEventListener('click', () => this.confirmPlacement());
         document.getElementById('start-game').addEventListener('click', () => this.startGame());
         document.getElementById('restart-game').addEventListener('click', () => this.restartGame());
-        document.getElementById('confirm-attack').addEventListener('click', () => this.confirmAttack());
-        document.getElementById('cancel-attack').addEventListener('click', () => this.cancelAttack());
         document.getElementById('mid-game-restart').addEventListener('click', () => this.handleMidGameRestart());
         document.getElementById('mid-game-home').addEventListener('click', () => this.handleMidGameHome());
     }
@@ -1233,72 +1230,10 @@ class BattleshipGame {
         // Prevent selecting already-attacked cells
         if (this.playerShots[row][col] !== null) return;
         
-        // Select the cell for attack confirmation
-        this.selectAttackCell(row, col);
-    }
-    
-    selectAttackCell(row, col) {
-        // Clear previous selection
-        if (this.selectedAttackCell) {
-            const prevCell = document.querySelector(`#computer-board .cell[data-row="${this.selectedAttackCell.row}"][data-col="${this.selectedAttackCell.col}"]`);
-            if (prevCell) {
-                prevCell.classList.remove('selected-attack');
-            }
-        }
-        
-        // Store selected cell
-        this.selectedAttackCell = { row, col };
-        this.sound.click();
-        
-        // Highlight selected cell
-        const cell = document.querySelector(`#computer-board .cell[data-row="${row}"][data-col="${col}"]`);
-        if (cell) {
-            cell.classList.add('selected-attack');
-        }
-        
-        // Show confirmation UI
-        const coordinate = this.grid.indicesToCoordinate(row, col);
-        document.getElementById('selected-coordinate').textContent = coordinate;
-        document.getElementById('attack-confirmation').style.display = 'block';
-    }
-    
-    confirmAttack() {
-        if (!this.selectedAttackCell) return;
-        
-        const { row, col } = this.selectedAttackCell;
-        
-        // Clear selection highlight
-        const cell = document.querySelector(`#computer-board .cell[data-row="${row}"][data-col="${col}"]`);
-        if (cell) {
-            cell.classList.remove('selected-attack');
-        }
-        
-        // Hide confirmation UI
-        document.getElementById('attack-confirmation').style.display = 'none';
-        
-        // Lock turn and execute attack
+        // Lock turn and execute attack immediately
         this.sound.drumHit();
         this.turnLocked = true;
-        this.selectedAttackCell = null;
         this.makeAttack(row, col, 'player');
-    }
-    
-    cancelAttack() {
-        if (!this.selectedAttackCell) return;
-        
-        const { row, col } = this.selectedAttackCell;
-        
-        // Clear selection highlight
-        const cell = document.querySelector(`#computer-board .cell[data-row="${row}"][data-col="${col}"]`);
-        if (cell) {
-            cell.classList.remove('selected-attack');
-        }
-        
-        // Hide confirmation UI
-        document.getElementById('attack-confirmation').style.display = 'none';
-        
-        // Clear selection
-        this.selectedAttackCell = null;
     }
     
     makeAttack(row, col, attacker) {
@@ -1706,7 +1641,6 @@ class BattleshipGame {
         
         document.getElementById('game-setup').style.display = 'block';
         document.getElementById('game-boards').style.display = 'none';
-        document.getElementById('attack-confirmation').style.display = 'none';
         document.body.style.overflow = '';
     }
 
@@ -1721,7 +1655,6 @@ class BattleshipGame {
         
         this.currentShip = null;
         this.draggedShip = null;
-        this.selectedAttackCell = null;
         this.orientation = 'horizontal';
         this.placementConfirmed = false;
         this.gameStarted = false;
@@ -1734,7 +1667,6 @@ class BattleshipGame {
         
         document.getElementById('player-hits').textContent = '0';
         document.getElementById('computer-hits').textContent = '0';
-        document.getElementById('attack-confirmation').style.display = 'none';
         document.getElementById('current-turn').textContent = 'Your Turn';
         document.getElementById('remaining-count').textContent = '5';
         
