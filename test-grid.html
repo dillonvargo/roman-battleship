@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Test - Battleship</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #1e3a8a;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #1e3a8a;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .pass {
+            background: #d4edda;
+            color: #155724;
+        }
+        .fail {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        pre {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Task 1.1 - Grid Definition Tests</h1>
+        <div id="test-results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        const resultsDiv = document.getElementById('test-results');
+        
+        function runTests() {
+            const grid = new BattleshipGrid();
+            const results = [];
+            
+            results.push('<div class="test-section"><h2>Test 1: Grid Dimensions</h2>');
+            results.push(testGridDimensions(grid));
+            results.push('</div>');
+            
+            results.push('<div class="test-section"><h2>Test 2: Valid Coordinate Conversion</h2>');
+            results.push(testValidCoordinates(grid));
+            results.push('</div>');
+            
+            results.push('<div class="test-section"><h2>Test 3: Invalid Coordinate Rejection</h2>');
+            results.push(testInvalidCoordinates(grid));
+            results.push('</div>');
+            
+            results.push('<div class="test-section"><h2>Test 4: Boundary Coordinates</h2>');
+            results.push(testBoundaryCoordinates(grid));
+            results.push('</div>');
+            
+            results.push('<div class="test-section"><h2>Test 5: Bidirectional Conversion</h2>');
+            results.push(testBidirectionalConversion(grid));
+            results.push('</div>');
+            
+            resultsDiv.innerHTML = results.join('');
+        }
+        
+        function testGridDimensions(grid) {
+            let output = '';
+            
+            const columnsTest = grid.COLUMNS.length === 10 && 
+                               grid.COLUMNS[0] === 'A' && 
+                               grid.COLUMNS[9] === 'J';
+            output += `<div class="test-result ${columnsTest ? 'pass' : 'fail'}">
+                ✓ Columns: ${grid.COLUMNS.join(', ')} ${columnsTest ? 'PASS' : 'FAIL'}
+            </div>`;
+            
+            const rowsTest = grid.ROWS.length === 10 && 
+                            grid.ROWS[0] === 1 && 
+                            grid.ROWS[9] === 10;
+            output += `<div class="test-result ${rowsTest ? 'pass' : 'fail'}">
+                ✓ Rows: ${grid.ROWS.join(', ')} ${rowsTest ? 'PASS' : 'FAIL'}
+            </div>`;
+            
+            const sizeTest = grid.GRID_SIZE === 10;
+            output += `<div class="test-result ${sizeTest ? 'pass' : 'fail'}">
+                ✓ Grid Size: ${grid.GRID_SIZE} ${sizeTest ? 'PASS' : 'FAIL'}
+            </div>`;
+            
+            return output;
+        }
+        
+        function testValidCoordinates(grid) {
+            let output = '';
+            const testCases = [
+                { coord: 'A1', expected: { row: 0, col: 0 } },
+                { coord: 'F7', expected: { row: 6, col: 5 } },
+                { coord: 'J10', expected: { row: 9, col: 9 } },
+                { coord: 'A10', expected: { row: 9, col: 0 } },
+                { coord: 'J1', expected: { row: 0, col: 9 } },
+                { coord: 'E5', expected: { row: 4, col: 4 } }
+            ];
+            
+            testCases.forEach(test => {
+                try {
+                    const result = grid.coordinateToIndices(test.coord);
+                    const pass = result.row === test.expected.row && result.col === test.expected.col;
+                    output += `<div class="test-result ${pass ? 'pass' : 'fail'}">
+                        ${test.coord} → row:${result.row}, col:${result.col} 
+                        (expected row:${test.expected.row}, col:${test.expected.col}) 
+                        ${pass ? 'PASS' : 'FAIL'}
+                    </div>`;
+                } catch (e) {
+                    output += `<div class="test-result fail">
+                        ${test.coord} → ERROR: ${e.message} FAIL
+                    </div>`;
+                }
+            });
+            
+            return output;
+        }
+        
+        function testInvalidCoordinates(grid) {
+            let output = '';
+            const invalidCases = [
+                'K1',    // Invalid column
+                'A11',   // Invalid row
+                'Z99',   // Both invalid
+                'A0',    // Row 0 doesn't exist
+                '1A',    // Reversed format
+                'AA1',   // Double column
+                'A',     // Missing row
+                '1',     // Missing column
+                'a1',    // Lowercase
+                '',      // Empty string
+                'A-1',   // Negative row
+                'A1B',   // Extra characters
+            ];
+            
+            invalidCases.forEach(coord => {
+                try {
+                    grid.coordinateToIndices(coord);
+                    output += `<div class="test-result fail">
+                        "${coord}" → Should have been rejected but was accepted FAIL
+                    </div>`;
+                } catch (e) {
+                    output += `<div class="test-result pass">
+                        "${coord}" → Correctly rejected: ${e.message} PASS
+                    </div>`;
+                }
+            });
+            
+            return output;
+        }
+        
+        function testBoundaryCoordinates(grid) {
+            let output = '';
+            const corners = [
+                { coord: 'A1', desc: 'Top-left corner' },
+                { coord: 'J1', desc: 'Top-right corner' },
+                { coord: 'A10', desc: 'Bottom-left corner' },
+                { coord: 'J10', desc: 'Bottom-right corner' }
+            ];
+            
+            corners.forEach(test => {
+                try {
+                    const result = grid.coordinateToIndices(test.coord);
+                    const valid = grid.isValidIndices(result.row, result.col);
+                    output += `<div class="test-result ${valid ? 'pass' : 'fail'}">
+                        ${test.desc} (${test.coord}) → row:${result.row}, col:${result.col} 
+                        ${valid ? 'PASS' : 'FAIL'}
+                    </div>`;
+                } catch (e) {
+                    output += `<div class="test-result fail">
+                        ${test.desc} (${test.coord}) → ERROR: ${e.message} FAIL
+                    </div>`;
+                }
+            });
+            
+            return output;
+        }
+        
+        function testBidirectionalConversion(grid) {
+            let output = '';
+            const testCases = [
+                'A1', 'F7', 'J10', 'E5', 'B3', 'H9', 'C2', 'I8', 'D6', 'G4'
+            ];
+            
+            testCases.forEach(originalCoord => {
+                try {
+                    const indices = grid.coordinateToIndices(originalCoord);
+                    const backToCoord = grid.indicesToCoordinate(indices.row, indices.col);
+                    const pass = originalCoord === backToCoord;
+                    
+                    output += `<div class="test-result ${pass ? 'pass' : 'fail'}">
+                        ${originalCoord} → (${indices.row},${indices.col}) → ${backToCoord} 
+                        ${pass ? 'PASS' : 'FAIL'}
+                    </div>`;
+                } catch (e) {
+                    output += `<div class="test-result fail">
+                        ${originalCoord} → ERROR: ${e.message} FAIL
+                    </div>`;
+                }
+            });
+            
+            return output;
+        }
+        
+        document.addEventListener('DOMContentLoaded', runTests);
+    </script>
+</body>
+</html>

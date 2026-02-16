@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="50.0 -50.0 100 200" width="100" height="200">
+  <g transform="rotate(90, 100.0, 50.0)">
+
+  <!-- Patrol (2 cells) - Bireme - Realistic Roman Warship -->
+  
+  <!-- Lower Hull (curved bottom) -->
+  <path d="M 20 75 Q 100 88 180 75 L 180 70 Q 100 78 20 70 Z" fill="#6b3410" stroke="#4a2508" stroke-width="2"/>
+  
+  <!-- Main Hull -->
+  <path d="M 15 70 L 185 70 L 170 55 L 30 55 Z" fill="#8b4513" stroke="#5d2f0e" stroke-width="2"/>
+  
+  <!-- Hull planks detail -->
+  <line x1="30" y1="58" x2="170" y2="58" stroke="#5d2f0e" stroke-width="1" opacity="0.5"/>
+  <line x1="30" y1="63" x2="170" y2="63" stroke="#5d2f0e" stroke-width="1" opacity="0.5"/>
+  <line x1="30" y1="68" x2="170" y2="68" stroke="#5d2f0e" stroke-width="1" opacity="0.5"/>
+  
+  <!-- Deck -->
+  <rect x="30" y="50" width="140" height="5" fill="#a0522d" stroke="#5d2f0e" stroke-width="1"/>
+  
+  <!-- Bow ornament -->
+  <path d="M 15 70 Q 10 65 12 55 L 30 55" fill="#8b4513" stroke="#5d2f0e" stroke-width="2"/>
+  <circle cx="12" cy="58" r="3" fill="#cd7f32"/>
+  
+  <!-- Stern ornament -->
+  <path d="M 185 70 Q 190 65 188 55 L 170 55" fill="#8b4513" stroke="#5d2f0e" stroke-width="2"/>
+  
+  <!-- Masts with sails (2 sails for 2 cells) -->
+  <g id="mast1">
+    <line x1="70" y1="50" x2="70" y2="15" stroke="#5d2f0e" stroke-width="2"/>
+    <path d="M 70 18 Q 85 28 70 45" fill="#e8d4a8" stroke="#8b7355" stroke-width="1"/>
+  </g>
+  <g id="mast2">
+    <line x1="130" y1="50" x2="130" y2="15" stroke="#5d2f0e" stroke-width="2"/>
+    <path d="M 130 18 Q 145 28 130 45" fill="#e8d4a8" stroke="#8b7355" stroke-width="1"/>
+  </g>
+  
+  <!-- Oars -->
+  <g opacity="0.8">
+    <line x1="60" y1="72" x2="45" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+    <line x1="140" y1="72" x2="125" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+  </g>
+
+  </g>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  <!-- Hull base -->
+  <rect x="0" y="18" width="40" height="12" fill="#9b6b4a" stroke="#6b4528" stroke-width="0.5"/>
+  <!-- Lower hull -->
+  <path d="M 0 30 Q 20 36 40 30" fill="#7a5235" stroke="#6b4528" stroke-width="0.8"/>
+  <!-- Hull planks -->
+  <line x1="0" y1="21" x2="40" y2="21" stroke="#6b4528" stroke-width="0.5" opacity="0.4"/>
+  <line x1="0" y1="24" x2="40" y2="24" stroke="#6b4528" stroke-width="0.5" opacity="0.4"/>
+  <line x1="0" y1="27" x2="40" y2="27" stroke="#6b4528" stroke-width="0.5" opacity="0.4"/>
+  <!-- Deck -->
+  <rect x="0" y="15" width="40" height="3" fill="#b08060" stroke="#6b4528" stroke-width="0.5"/>
+  <!-- Deck plank lines -->
+  <line x1="8" y1="15" x2="8" y2="18" stroke="#6b4528" stroke-width="0.3" opacity="0.5"/>
+  <line x1="16" y1="15" x2="16" y2="18" stroke="#6b4528" stroke-width="0.3" opacity="0.5"/>
+  <line x1="24" y1="15" x2="24" y2="18" stroke="#6b4528" stroke-width="0.3" opacity="0.5"/>
+  <line x1="32" y1="15" x2="32" y2="18" stroke="#6b4528" stroke-width="0.3" opacity="0.5"/>
+  <!-- Shield on side -->
+  <circle cx="12" cy="18" r="3.5" fill="#daa520" stroke="#b8860b" stroke-width="0.8"/>
+  <circle cx="12" cy="18" r="1.5" fill="#b8860b" stroke="#b8860b" stroke-width="0.3"/>
+  <!-- Oar -->
+  <line x1="30" y1="30" x2="34" y2="36" stroke="#6b4528" stroke-width="1.2" opacity="0.7"/>
+  <line x1="10" y1="30" x2="6" y2="36" stroke="#6b4528" stroke-width="1.2" opacity="0.7"/>
+  <!-- Mast with sail -->
+  <line x1="20" y1="15" x2="20" y2="2" stroke="#6b4528" stroke-width="1.2"/>
+  <path d="M 20 3 Q 30 9 20 14" fill="#f0e0c8" stroke="#8b7355" stroke-width="0.6" opacity="0.9"/>
+</svg>

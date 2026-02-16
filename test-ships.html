@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship Tests - Battleship</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #1e3a8a;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #1e3a8a;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .pass {
+            background: #d4edda;
+            color: #155724;
+        }
+        .fail {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        pre {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background: #1e3a8a;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Task 1.2 - Ship Definitions Tests</h1>
+        <div id="test-results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        const resultsDiv = document.getElementById('test-results');
+        
+        function runTests() {
+            const results = [];
+            
+            results.push('<div class="test-section"><h2>Test 1: Fleet Definition</h2>');
+            results.push(testFleetDefinition());
+            results.push('</div>');
+            
+            results.push('<div class="test-section"><h2>Test 2: Ship Instantiation</h2>');
+            results.push(testShipInstantiation());
+            results.push('</div>');
+            
+            results.push('<div class="test-section"><h2>Test 3: Health Management</h2>');
+            results.push(testHealthManagement());
+            results.push('</div>');
+            
+            results.push('<div class="test-section"><h2>Test 4: Sunk State</h2>');
+            results.push(testSunkState());
+            results.push('</div>');
+            
+            results.push('<div class="test-section"><h2>Test 5: Occupied Cells</h2>');
+            results.push(testOccupiedCells());
+            results.push('</div>');
+            
+            results.push('<div class="test-section"><h2>Test 6: Roman Theme Mapping</h2>');
+            results.push(testRomanTheme());
+            results.push('</div>');
+            
+            resultsDiv.innerHTML = results.join('');
+        }
+        
+        function testFleetDefinition() {
+            let output = '<table>';
+            output += '<tr><th>Ship Class</th><th>Size</th><th>Initial Health</th><th>Status</th></tr>';
+            
+            const expectedFleet = {
+                carrier: { size: 5, health: 5 },
+                battleship: { size: 4, health: 4 },
+                destroyer: { size: 3, health: 3 },
+                submarine: { size: 3, health: 3 },
+                patrol: { size: 2, health: 2 }
+            };
+            
+            const game = new BattleshipGame();
+            let allPass = true;
+            
+            for (const [shipClass, expected] of Object.entries(expectedFleet)) {
+                const ship = game.playerFleet[shipClass];
+                const pass = ship && ship.size === expected.size && ship.currentHealth === expected.health;
+                allPass = allPass && pass;
+                
+                output += `<tr style="background: ${pass ? '#d4edda' : '#f8d7da'}">`;
+                output += `<td>${shipClass}</td>`;
+                output += `<td>${ship ? ship.size : 'N/A'}</td>`;
+                output += `<td>${ship ? ship.currentHealth : 'N/A'}</td>`;
+                output += `<td>${pass ? 'PASS' : 'FAIL'}</td>`;
+                output += '</tr>';
+            }
+            
+            output += '</table>';
+            output += `<div class="test-result ${allPass ? 'pass' : 'fail'}">`;
+            output += `Overall Fleet Definition: ${allPass ? 'PASS' : 'FAIL'}`;
+            output += '</div>';
+            
+            return output;
+        }
+        
+        function testShipInstantiation() {
+            let output = '';
+            
+            const carrier = new Ship('carrier', 5);
+            const pass1 = carrier.shipClass === 'carrier' && 
+                         carrier.size === 5 && 
+                         carrier.maxHealth === 5 && 
+                         carrier.currentHealth === 5 &&
+                         carrier.isSunk === false &&
+                         carrier.occupiedCells.length === 0;
+            
+            output += `<div class="test-result ${pass1 ? 'pass' : 'fail'}">`;
+            output += `Carrier instantiation with full health: ${pass1 ? 'PASS' : 'FAIL'}<br>`;
+            output += `- shipClass: ${carrier.shipClass}<br>`;
+            output += `- size: ${carrier.size}<br>`;
+            output += `- maxHealth: ${carrier.maxHealth}<br>`;
+            output += `- currentHealth: ${carrier.currentHealth}<br>`;
+            output += `- isSunk: ${carrier.isSunk}<br>`;
+            output += `- occupiedCells: ${JSON.stringify(carrier.occupiedCells)}`;
+            output += '</div>';
+            
+            const patrol = new Ship('patrol', 2);
+            const pass2 = patrol.size === 2 && patrol.currentHealth === 2;
+            
+            output += `<div class="test-result ${pass2 ? 'pass' : 'fail'}">`;
+            output += `Patrol Boat instantiation: ${pass2 ? 'PASS' : 'FAIL'}<br>`;
+            output += `- size: ${patrol.size}, currentHealth: ${patrol.currentHealth}`;
+            output += '</div>';
+            
+            return output;
+        }
+        
+        function testHealthManagement() {
+            let output = '';
+            
+            const ship = new Ship('destroyer', 3);
+            
+            output += '<pre>';
+            output += `Initial state: health=${ship.currentHealth}/${ship.maxHealth}, sunk=${ship.isSunk}\n`;
+            
+            ship.hit();
+            output += `After 1 hit:   health=${ship.currentHealth}/${ship.maxHealth}, sunk=${ship.isSunk}\n`;
+            const pass1 = ship.currentHealth === 2 && !ship.isSunk;
+            
+            ship.hit();
+            output += `After 2 hits:  health=${ship.currentHealth}/${ship.maxHealth}, sunk=${ship.isSunk}\n`;
+            const pass2 = ship.currentHealth === 1 && !ship.isSunk;
+            
+            ship.hit();
+            output += `After 3 hits:  health=${ship.currentHealth}/${ship.maxHealth}, sunk=${ship.isSunk}\n`;
+            const pass3 = ship.currentHealth === 0 && ship.isSunk;
+            
+            output += '</pre>';
+            
+            const allPass = pass1 && pass2 && pass3;
+            output += `<div class="test-result ${allPass ? 'pass' : 'fail'}">`;
+            output += `Health decreases correctly on hit: ${allPass ? 'PASS' : 'FAIL'}`;
+            output += '</div>';
+            
+            return output;
+        }
+        
+        function testSunkState() {
+            let output = '';
+            
+            const carrier = new Ship('carrier', 5);
+            
+            for (let i = 0; i < 5; i++) {
+                carrier.hit();
+            }
+            
+            const pass1 = carrier.currentHealth === 0 && carrier.isSunk;
+            output += `<div class="test-result ${pass1 ? 'pass' : 'fail'}">`;
+            output += `Ship enters sunk state at 0 health: ${pass1 ? 'PASS' : 'FAIL'}<br>`;
+            output += `- currentHealth: ${carrier.currentHealth}<br>`;
+            output += `- isSunk: ${carrier.isSunk}`;
+            output += '</div>';
+            
+            const hitResult = carrier.hit();
+            const pass2 = !hitResult && carrier.currentHealth === 0;
+            output += `<div class="test-result ${pass2 ? 'pass' : 'fail'}">`;
+            output += `Hitting sunk ship returns false: ${pass2 ? 'PASS' : 'FAIL'}<br>`;
+            output += `- hit() returned: ${hitResult}<br>`;
+            output += `- health remains: ${carrier.currentHealth}`;
+            output += '</div>';
+            
+            const battleship = new Ship('battleship', 4);
+            battleship.hit();
+            battleship.hit();
+            const pass3 = battleship.currentHealth === 2 && !battleship.isSunk;
+            output += `<div class="test-result ${pass3 ? 'pass' : 'fail'}">`;
+            output += `Partially damaged ship not sunk: ${pass3 ? 'PASS' : 'FAIL'}<br>`;
+            output += `- currentHealth: ${battleship.currentHealth}<br>`;
+            output += `- isSunk: ${battleship.isSunk}`;
+            output += '</div>';
+            
+            return output;
+        }
+        
+        function testOccupiedCells() {
+            let output = '';
+            
+            const ship = new Ship('submarine', 3);
+            const cells = [[2, 3], [2, 4], [2, 5]];
+            ship.setOccupiedCells(cells);
+            
+            const pass1 = ship.occupiedCells.length === 3;
+            const pass2 = ship.occupiedCells[0].row === 2 && ship.occupiedCells[0].col === 3;
+            const pass3 = ship.occupiedCells[2].row === 2 && ship.occupiedCells[2].col === 5;
+            
+            output += `<div class="test-result ${pass1 && pass2 && pass3 ? 'pass' : 'fail'}">`;
+            output += `Occupied cells stored correctly: ${pass1 && pass2 && pass3 ? 'PASS' : 'FAIL'}<br>`;
+            output += `- Length: ${ship.occupiedCells.length}<br>`;
+            output += `- Cells: ${JSON.stringify(ship.occupiedCells)}`;
+            output += '</div>';
+            
+            const status = ship.getStatus();
+            const pass4 = status.occupiedCells.length === 3 && 
+                         status.shipClass === 'submarine' &&
+                         status.size === 3;
+            
+            output += `<div class="test-result ${pass4 ? 'pass' : 'fail'}">`;
+            output += `getStatus() returns complete info: ${pass4 ? 'PASS' : 'FAIL'}<br>`;
+            output += `<pre>${JSON.stringify(status, null, 2)}</pre>`;
+            output += '</div>';
+            
+            return output;
+        }
+        
+        function testRomanTheme() {
+            let output = '<table>';
+            output += '<tr><th>Ship Class</th><th>Size</th><th>Roman Name</th><th>Status</th></tr>';
+            
+            const expectedMapping = {
+                carrier: { size: 5, roman: 'Quinquereme' },
+                battleship: { size: 4, roman: 'Quadrireme' },
+                destroyer: { size: 3, roman: 'Trireme' },
+                submarine: { size: 3, roman: 'Trireme' },
+                patrol: { size: 2, roman: 'Bireme' }
+            };
+            
+            let allPass = true;
+            
+            for (const [shipClass, expected] of Object.entries(expectedMapping)) {
+                const ship = new Ship(shipClass, expected.size);
+                const pass = ship.romanName === expected.roman;
+                allPass = allPass && pass;
+                
+                output += `<tr style="background: ${pass ? '#d4edda' : '#f8d7da'}">`;
+                output += `<td>${shipClass}</td>`;
+                output += `<td>${ship.size}</td>`;
+                output += `<td>${ship.romanName}</td>`;
+                output += `<td>${pass ? 'PASS' : 'FAIL'}</td>`;
+                output += '</tr>';
+            }
+            
+            output += '</table>';
+            output += `<div class="test-result ${allPass ? 'pass' : 'fail'}">`;
+            output += `Roman theme mapping (visual/flavor only): ${allPass ? 'PASS' : 'FAIL'}`;
+            output += '</div>';
+            
+            return output;
+        }
+        
+        document.addEventListener('DOMContentLoaded', runTests);
+    </script>
+</body>
+</html>

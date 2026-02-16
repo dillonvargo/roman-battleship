@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="200.0 -200.0 100 500" width="100" height="500">
+  <g transform="rotate(90, 250.0, 50.0)">
+
+  <!-- Carrier (5 cells) - Quinquereme - Realistic Roman Warship -->
+  
+  <!-- Lower Hull (curved bottom) -->
+  <path d="M 20 75 Q 250 95 480 75 L 480 70 Q 250 85 20 70 Z" fill="#6b3410" stroke="#4a2508" stroke-width="2"/>
+  
+  <!-- Main Hull -->
+  <path d="M 10 70 L 490 70 L 470 55 L 30 55 Z" fill="#8b4513" stroke="#5d2f0e" stroke-width="2"/>
+  
+  <!-- Hull planks detail -->
+  <line x1="30" y1="58" x2="470" y2="58" stroke="#5d2f0e" stroke-width="1" opacity="0.5"/>
+  <line x1="30" y1="63" x2="470" y2="63" stroke="#5d2f0e" stroke-width="1" opacity="0.5"/>
+  <line x1="30" y1="68" x2="470" y2="68" stroke="#5d2f0e" stroke-width="1" opacity="0.5"/>
+  
+  <!-- Deck -->
+  <rect x="30" y="50" width="440" height="5" fill="#a0522d" stroke="#5d2f0e" stroke-width="1"/>
+  
+  <!-- Bow ornament (curved prow) -->
+  <path d="M 10 70 Q 5 65 8 55 L 30 55" fill="#8b4513" stroke="#5d2f0e" stroke-width="2"/>
+  <circle cx="8" cy="58" r="3" fill="#cd7f32"/>
+  
+  <!-- Stern ornament -->
+  <path d="M 490 70 Q 495 65 492 55 L 470 55" fill="#8b4513" stroke="#5d2f0e" stroke-width="2"/>
+  <path d="M 492 55 Q 495 50 492 45" stroke="#5d2f0e" stroke-width="2" fill="none"/>
+  
+  <!-- Masts with sails (5 sails for 5 cells) -->
+  <g id="mast1">
+      <line x1="90" y1="50" x2="90" y2="15" stroke="#5d2f0e" stroke-width="2"/>
+      <path d="M 90 18 Q 105 28 90 45" fill="#e8d4a8" stroke="#8b7355" stroke-width="1"/>
+  </g>
+  <g id="mast2">
+      <line x1="170" y1="50" x2="170" y2="15" stroke="#5d2f0e" stroke-width="2"/>
+      <path d="M 170 18 Q 185 28 170 45" fill="#e8d4a8" stroke="#8b7355" stroke-width="1"/>
+  </g>
+  <g id="mast3">
+      <line x1="250" y1="50" x2="250" y2="10" stroke="#5d2f0e" stroke-width="2.5"/>
+      <path d="M 250 12 Q 268 25 250 45" fill="#e8d4a8" stroke="#8b7355" stroke-width="1"/>
+  </g>
+  <g id="mast4">
+      <line x1="330" y1="50" x2="330" y2="15" stroke="#5d2f0e" stroke-width="2"/>
+      <path d="M 330 18 Q 345 28 330 45" fill="#e8d4a8" stroke="#8b7355" stroke-width="1"/>
+  </g>
+  <g id="mast5">
+      <line x1="410" y1="50" x2="410" y2="15" stroke="#5d2f0e" stroke-width="2"/>
+      <path d="M 410 18 Q 425 28 410 45" fill="#e8d4a8" stroke="#8b7355" stroke-width="1"/>
+  </g>
+  
+  <!-- Oars (multiple rows for quinquereme) -->
+  <g opacity="0.8">
+      <line x1="60" y1="72" x2="45" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+      <line x1="140" y1="72" x2="125" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+      <line x1="220" y1="72" x2="205" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+      <line x1="300" y1="72" x2="285" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+      <line x1="380" y1="72" x2="365" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+      <line x1="460" y1="72" x2="445" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+  </g>
+
+  </g>
+</svg>

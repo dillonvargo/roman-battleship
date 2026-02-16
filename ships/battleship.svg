@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="400" height="100">
+  <!-- Battleship (4 cells) - Quadrireme - Realistic Roman Warship -->
+  
+  <!-- Lower Hull (curved bottom) -->
+  <path d="M 20 75 Q 200 92 380 75 L 380 70 Q 200 82 20 70 Z" fill="#6b3410" stroke="#4a2508" stroke-width="2"/>
+  
+  <!-- Main Hull -->
+  <path d="M 15 70 L 385 70 L 370 55 L 30 55 Z" fill="#8b4513" stroke="#5d2f0e" stroke-width="2"/>
+  
+  <!-- Hull planks detail -->
+  <line x1="30" y1="58" x2="370" y2="58" stroke="#5d2f0e" stroke-width="1" opacity="0.5"/>
+  <line x1="30" y1="63" x2="370" y2="63" stroke="#5d2f0e" stroke-width="1" opacity="0.5"/>
+  <line x1="30" y1="68" x2="370" y2="68" stroke="#5d2f0e" stroke-width="1" opacity="0.5"/>
+  
+  <!-- Deck -->
+  <rect x="30" y="50" width="340" height="5" fill="#a0522d" stroke="#5d2f0e" stroke-width="1"/>
+  
+  <!-- Bow ornament -->
+  <path d="M 15 70 Q 10 65 12 55 L 30 55" fill="#8b4513" stroke="#5d2f0e" stroke-width="2"/>
+  <circle cx="12" cy="58" r="3" fill="#cd7f32"/>
+  
+  <!-- Stern ornament -->
+  <path d="M 385 70 Q 390 65 388 55 L 370 55" fill="#8b4513" stroke="#5d2f0e" stroke-width="2"/>
+  <path d="M 388 55 Q 391 50 388 45" stroke="#5d2f0e" stroke-width="2" fill="none"/>
+  
+  <!-- Masts with sails (4 sails for 4 cells) -->
+  <g id="mast1">
+    <line x1="90" y1="50" x2="90" y2="15" stroke="#5d2f0e" stroke-width="2"/>
+    <path d="M 90 18 Q 105 28 90 45" fill="#e8d4a8" stroke="#8b7355" stroke-width="1"/>
+  </g>
+  <g id="mast2">
+    <line x1="170" y1="50" x2="170" y2="15" stroke="#5d2f0e" stroke-width="2"/>
+    <path d="M 170 18 Q 185 28 170 45" fill="#e8d4a8" stroke="#8b7355" stroke-width="1"/>
+  </g>
+  <g id="mast3">
+    <line x1="230" y1="50" x2="230" y2="15" stroke="#5d2f0e" stroke-width="2"/>
+    <path d="M 230 18 Q 245 28 230 45" fill="#e8d4a8" stroke="#8b7355" stroke-width="1"/>
+  </g>
+  <g id="mast4">
+    <line x1="310" y1="50" x2="310" y2="15" stroke="#5d2f0e" stroke-width="2"/>
+    <path d="M 310 18 Q 325 28 310 45" fill="#e8d4a8" stroke="#8b7355" stroke-width="1"/>
+  </g>
+  
+  <!-- Oars -->
+  <g opacity="0.8">
+    <line x1="70" y1="72" x2="55" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+    <line x1="150" y1="72" x2="135" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+    <line x1="250" y1="72" x2="235" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+    <line x1="330" y1="72" x2="315" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+  </g>
+</svg>

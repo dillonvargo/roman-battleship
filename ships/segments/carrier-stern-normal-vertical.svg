@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  <g transform="rotate(90, 20, 20)">
+
+  <!-- Hull base -->
+  <path d="M 0 30 L 0 18 L 32 18 L 38 22 Z" fill="#8b4513" stroke="#5d2f0e" stroke-width="1"/>
+  <!-- Lower hull curve -->
+  <path d="M 0 30 Q 16 36 38 30" fill="#6b3410" stroke="#5d2f0e" stroke-width="0.8"/>
+  <!-- Hull planks -->
+  <line x1="0" y1="21" x2="34" y2="21" stroke="#5d2f0e" stroke-width="0.5" opacity="0.4"/>
+  <line x1="0" y1="24" x2="36" y2="24" stroke="#5d2f0e" stroke-width="0.5" opacity="0.4"/>
+  <line x1="0" y1="27" x2="38" y2="27" stroke="#5d2f0e" stroke-width="0.5" opacity="0.4"/>
+  <!-- Deck -->
+  <rect x="0" y="15" width="32" height="3" fill="#a0522d" stroke="#5d2f0e" stroke-width="0.5"/>
+  <!-- Deck plank lines -->
+  <line x1="8" y1="15" x2="8" y2="18" stroke="#5d2f0e" stroke-width="0.3" opacity="0.5"/>
+  <line x1="16" y1="15" x2="16" y2="18" stroke="#5d2f0e" stroke-width="0.3" opacity="0.5"/>
+  <line x1="24" y1="15" x2="24" y2="18" stroke="#5d2f0e" stroke-width="0.3" opacity="0.5"/>
+  <!-- Curved stern post -->
+  <path d="M 32 18 Q 36 16 38 10 Q 39 6 37 3" fill="none" stroke="#5d2f0e" stroke-width="1.5"/>
+  <path d="M 32 18 Q 35 17 37 12" fill="#8b4513" stroke="#5d2f0e" stroke-width="0.8"/>
+  <!-- Stern ornament -->
+  <circle cx="37" cy="5" r="2" fill="#cd7f32" stroke="#8b6914" stroke-width="0.6"/>
+  <!-- Rudder oar -->
+  <line x1="35" y1="22" x2="40" y2="34" stroke="#5d2f0e" stroke-width="1.5" opacity="0.8"/>
+  <path d="M 39 32 L 40 36 L 38 35 Z" fill="#8b4513" stroke="#5d2f0e" stroke-width="0.5"/>
+  <!-- Shield on side -->
+  <circle cx="12" cy="18" r="3.5" fill="#cd7f32" stroke="#8b6914" stroke-width="0.8"/>
+  <circle cx="12" cy="18" r="1.5" fill="#8b6914" stroke="#8b6914" stroke-width="0.3"/>
+  <!-- Oar -->
+  <line x1="8" y1="30" x2="4" y2="36" stroke="#5d2f0e" stroke-width="1.2" opacity="0.7"/>
+
+  </g>
+</svg>

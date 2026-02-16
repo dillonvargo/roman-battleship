@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battleship Game</title>
+    <link rel="stylesheet" href="style.css?v=6">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Roman Naval Warfare</h1>
+            <div class="game-info">
+                <div class="score">
+                    <span>Enemy Vessels Struck: <span id="player-hits">0</span></span>
+                    <span>Your Vessels Struck: <span id="computer-hits">0</span></span>
+                </div>
+                <div class="turn-indicator">
+                    <span id="current-turn">Your Command</span>
+                </div>
+            </div>
+            <div class="attack-feedback" id="attack-feedback" style="display: none;">
+                <div class="banner-title" id="banner-title"></div>
+                <div class="banner-subtext" id="banner-subtext"></div>
+            </div>
+            <div class="sound-settings">
+                <div class="sound-toggle-row">
+                    <label class="sound-label" for="sound-toggle">Sound</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="sound-toggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="volume-row">
+                    <label class="sound-label" for="volume-slider">Volume</label>
+                    <input type="range" id="volume-slider" min="0" max="100" value="50">
+                    <span id="volume-value">50%</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="game-setup" id="game-setup">
+                <h2>Deploy Your Fleet</h2>
+                <div class="placement-status" id="placement-status">
+                    <p id="status-message">Position your warships in formation</p>
+                    <p id="ships-remaining">Vessels to deploy: <span id="remaining-count">5</span>/5</p>
+                </div>
+                <div class="setup-content">
+                    <div class="setup-left">
+                        <div class="ship-selector">
+                            <div class="ship" data-ship="carrier" data-length="5" draggable="true">
+                                <img src="ships/carrier.svg" alt="Carrier (5) - Quinquereme" draggable="false">
+                                <span>Carrier (5) - Quinquereme</span>
+                                <button class="edit-ship-btn" data-ship="carrier" style="display:none;">Edit</button>
+                            </div>
+                            <div class="ship" data-ship="battleship" data-length="4" draggable="true">
+                                <img src="ships/battleship.svg" alt="Battleship (4) - Quadrireme" draggable="false">
+                                <span>Battleship (4) - Quadrireme</span>
+                                <button class="edit-ship-btn" data-ship="battleship" style="display:none;">Edit</button>
+                            </div>
+                            <div class="ship" data-ship="destroyer" data-length="3" draggable="true">
+                                <img src="ships/destroyer.svg" alt="Destroyer (3) - Trireme" draggable="false">
+                                <span>Destroyer (3) - Trireme</span>
+                                <button class="edit-ship-btn" data-ship="destroyer" style="display:none;">Edit</button>
+                            </div>
+                            <div class="ship" data-ship="submarine" data-length="3" draggable="true">
+                                <img src="ships/submarine.svg" alt="Submarine (3) - Trireme" draggable="false">
+                                <span>Submarine (3) - Trireme</span>
+                                <button class="edit-ship-btn" data-ship="submarine" style="display:none;">Edit</button>
+                            </div>
+                            <div class="ship" data-ship="patrol" data-length="2" draggable="true">
+                                <img src="ships/patrol.svg" alt="Patrol Boat (2) - Bireme" draggable="false">
+                                <span>Patrol Boat (2) - Bireme</span>
+                                <button class="edit-ship-btn" data-ship="patrol" style="display:none;">Edit</button>
+                            </div>
+                        </div>
+                        <div class="orientation-selector">
+                            <label>
+                                <input type="radio" name="orientation" value="horizontal" checked>
+                                <span>⬌ Horizontal</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="orientation" value="vertical">
+                                <span>⬍ Vertical</span>
+                            </label>
+                        </div>
+                        <div class="placement-instructions">
+                            <p><strong>Battle Preparations:</strong></p>
+                            <ul>
+                                <li>Position warships from the fleet roster</li>
+                                <li>Orient vessels for optimal formation</li>
+                                <li>Vessels must not collide or drift beyond waters</li>
+                                <li>Confirm formation when fleet is ready</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="setup-right">
+                        <div class="board-wrapper">
+                            <div class="board-labels-col">
+                                <div class="label-corner"></div>
+                                <div class="label">1</div>
+                                <div class="label">2</div>
+                                <div class="label">3</div>
+                                <div class="label">4</div>
+                                <div class="label">5</div>
+                                <div class="label">6</div>
+                                <div class="label">7</div>
+                                <div class="label">8</div>
+                                <div class="label">9</div>
+                                <div class="label">10</div>
+                            </div>
+                            <div class="board-with-labels">
+                                <h3>Roman Fleet Formation</h3>
+                                <div class="board-labels-row">
+                                    <div class="label">A</div>
+                                    <div class="label">B</div>
+                                    <div class="label">C</div>
+                                    <div class="label">D</div>
+                                    <div class="label">E</div>
+                                    <div class="label">F</div>
+                                    <div class="label">G</div>
+                                    <div class="label">H</div>
+                                    <div class="label">I</div>
+                                    <div class="label">J</div>
+                                </div>
+                                <div class="board" id="setup-board"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button id="confirm-placement" disabled style="display: none;">Formation Complete</button>
+                    <button id="start-game" style="display: none;">Engage Enemy</button>
+                </div>
+            </div>
+
+            <div class="game-boards" id="game-boards" style="display: none;">
+                <div class="boards-wrapper">
+                    <div class="board-container">
+                        <h3>Roman Waters</h3>
+                    <div class="board-wrapper">
+                        <div class="board-labels-col">
+                            <div class="label-corner"></div>
+                            <div class="label">1</div>
+                            <div class="label">2</div>
+                            <div class="label">3</div>
+                            <div class="label">4</div>
+                            <div class="label">5</div>
+                            <div class="label">6</div>
+                            <div class="label">7</div>
+                            <div class="label">8</div>
+                            <div class="label">9</div>
+                            <div class="label">10</div>
+                        </div>
+                        <div class="board-with-labels">
+                            <div class="board-labels-row">
+                                <div class="label">A</div>
+                                <div class="label">B</div>
+                                <div class="label">C</div>
+                                <div class="label">D</div>
+                                <div class="label">E</div>
+                                <div class="label">F</div>
+                                <div class="label">G</div>
+                                <div class="label">H</div>
+                                <div class="label">I</div>
+                                <div class="label">J</div>
+                            </div>
+                            <div class="board" id="player-board"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="board-container">
+                    <h3>Enemy Waters</h3>
+                    <div class="board-wrapper">
+                        <div class="board-labels-col">
+                            <div class="label-corner"></div>
+                            <div class="label">1</div>
+                            <div class="label">2</div>
+                            <div class="label">3</div>
+                            <div class="label">4</div>
+                            <div class="label">5</div>
+                            <div class="label">6</div>
+                            <div class="label">7</div>
+                            <div class="label">8</div>
+                            <div class="label">9</div>
+                            <div class="label">10</div>
+                        </div>
+                        <div class="board-with-labels">
+                            <div class="board-labels-row">
+                                <div class="label">A</div>
+                                <div class="label">B</div>
+                                <div class="label">C</div>
+                                <div class="label">D</div>
+                                <div class="label">E</div>
+                                <div class="label">F</div>
+                                <div class="label">G</div>
+                                <div class="label">H</div>
+                                <div class="label">I</div>
+                                <div class="label">J</div>
+                            </div>
+                            <div class="board" id="computer-board"></div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="attack-confirmation" id="attack-confirmation" style="display: none;">
+                    <p id="attack-target">Target Coordinates: <span id="selected-coordinate">--</span></p>
+                    <div class="attack-buttons">
+                        <button id="confirm-attack" class="confirm-btn">Launch Ram</button>
+                        <button id="cancel-attack" class="cancel-btn">Withdraw</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-over" id="game-over" style="display: none;">
+                <div class="sun-rays" id="sun-rays"></div>
+                <div class="laurel-confetti" id="laurel-confetti"></div>
+                <div class="game-over-content">
+                    <div class="victory-banner" id="victory-banner">
+                        <h2 id="game-result"></h2>
+                        <p class="victory-subtext" id="victory-subtext"></p>
+                    </div>
+                    <div class="game-statistics">
+                        <h3>Battle Report</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-label">Enemy Vessels Destroyed</span>
+                                <span class="stat-value" id="final-player-sunk">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Your Vessels Lost</span>
+                                <span class="stat-value" id="final-computer-sunk">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Battle Rounds</span>
+                                <span class="stat-value" id="final-turns">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Ram Accuracy</span>
+                                <span class="stat-value" id="final-accuracy">0%</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Successful Rams</span>
+                                <span class="stat-value" id="final-hits">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Ram Attempts</span>
+                                <span class="stat-value" id="final-shots">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="restart-game" class="restart-btn">Return to Harbor</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js?v=6"></script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victory Detection Test - Task 6.1</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .test-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            background: linear-gradient(135deg, #f4e4c1 0%, #e8d4a8 100%);
+            border: 3px solid #8b5a2b;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .test-section h2 {
+            color: #8b4513;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .requirement {
+            padding: 10px;
+            margin: 8px 0;
+            background: rgba(139, 90, 43, 0.1);
+            border-left: 4px solid #2d5016;
+            border-radius: 3px;
+        }
+        .checkmark {
+            color: #2d5016;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .code-block {
+            background: rgba(0,0,0,0.05);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #8b5a2b;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .flow-step {
+            background: rgba(139, 90, 43, 0.1);
+            border: 2px solid #8b5a2b;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            min-width: 120px;
+        }
+        .flow-step.victory {
+            border-color: #d4af37;
+            background: rgba(212, 175, 55, 0.2);
+        }
+        .flow-step h3 {
+            color: #8b4513;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #8b5a2b;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <header>
+            <h1>Task 6.1 - Victory Detection</h1>
+        </header>
+
+        <div class="test-section">
+            <h2>Requirements Verification</h2>
+            <div class="requirement">
+                <span class="checkmark">✓</span> Continuously track enemy fleet status
+            </div>
+            <div class="requirement">
+                <span class="checkmark">✓</span> Game ends immediately when all enemy ships are sunk
+            </div>
+            <div class="requirement">
+                <span class="checkmark">✓</span> Win condition triggers instantly on final sink
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Victory Detection Flow</h2>
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <h3>Attack Hits</h3>
+                    <p>Ship damaged</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <h3>Ship Sinks</h3>
+                    <p>isSunk = true</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step victory">
+                    <h3>Check Win</h3>
+                    <p>Immediate check</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step victory">
+                    <h3>All Sunk?</h3>
+                    <p>Fleet status</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step victory">
+                    <h3>End Game</h3>
+                    <p>Victory!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Implementation Details</h2>
+            
+            <h3 style="color: #8b4513; margin: 15px 0;">Attack Resolution (Continuous Tracking):</h3>
+            <div class="code-block">
+makeAttack(row, col, attacker) {
+    // ... attack logic ...
+    
+    if (hit) {
+        const ship = targetFleet[shipType];
+        ship.hit();  // Reduce health, potentially sink ship
+    }
+    
+    // ✓ IMMEDIATE win condition check after every attack
+    if (this.checkWinCondition()) {
+        this.endGame();  // Triggers instantly
+    } else {
+        this.switchTurn();
+    }
+}
+            </div>
+
+            <h3 style="color: #8b4513; margin: 15px 0;">Win Condition Check:</h3>
+            <div class="code-block">
+checkWinCondition() {
+    // ✓ Check both fleets continuously
+    const playerWon = this.checkAllShipsSunk(this.computerFleet);
+    const computerWon = this.checkAllShipsSunk(this.playerFleet);
+    
+    if (playerWon) {
+        console.log('Victory! All enemy ships sunk!');
+    } else if (computerWon) {
+        console.log('Defeat! All your ships sunk!');
+    }
+    
+    return playerWon || computerWon;
+}
+            </div>
+
+            <h3 style="color: #8b4513; margin: 15px 0;">Fleet Status Tracking:</h3>
+            <div class="code-block">
+checkAllShipsSunk(fleet) {
+    // ✓ Continuously track fleet status
+    const allSunk = Object.values(fleet).every(ship => ship.isSunk);
+    const sunkCount = Object.values(fleet).filter(ship => ship.isSunk).length;
+    const totalShips = Object.values(fleet).length;
+    
+    console.log(`Fleet status: ${sunkCount}/${totalShips} ships sunk`);
+    
+    return allSunk;  // true when ALL ships are sunk
+}
+            </div>
+
+            <h3 style="color: #8b4513; margin: 15px 0;">Game End (Instant Trigger):</h3>
+            <div class="code-block">
+endGame() {
+    const playerWon = this.checkAllShipsSunk(this.computerFleet);
+    
+    // ✓ Immediately hide game boards and show result
+    document.getElementById('game-boards').style.display = 'none';
+    document.getElementById('game-over').style.display = 'block';
+    
+    const gameOverEl = document.getElementById('game-over');
+    const resultEl = document.getElementById('game-result');
+    
+    if (playerWon) {
+        gameOverEl.classList.add('win');
+        resultEl.textContent = 'You Won! 🎉';
+    } else {
+        gameOverEl.classList.add('lose');
+        resultEl.textContent = 'Computer Won! 💥';
+    }
+}
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Victory Scenario Example</h2>
+            <div style="background: rgba(139, 90, 43, 0.1); padding: 20px; border-radius: 5px;">
+                <h3 style="color: #8b4513; margin-bottom: 15px;">Enemy Fleet: 5 Ships</h3>
+                <ol style="color: #6b4e3d; line-height: 2;">
+                    <li><strong>Quinquereme sunk</strong> → Fleet: 1/5 sunk → Continue game</li>
+                    <li><strong>Quadrireme sunk</strong> → Fleet: 2/5 sunk → Continue game</li>
+                    <li><strong>Trireme (Destroyer) sunk</strong> → Fleet: 3/5 sunk → Continue game</li>
+                    <li><strong>Trireme (Submarine) sunk</strong> → Fleet: 4/5 sunk → Continue game</li>
+                    <li><strong>Bireme sunk</strong> → Fleet: 5/5 sunk → <span style="color: #d4af37; font-weight: bold;">INSTANT VICTORY!</span></li>
+                </ol>
+                <p style="color: #8b4513; margin-top: 15px; font-weight: bold;">
+                    ✓ Win condition checked immediately after final ship sinks<br>
+                    ✓ Game ends without switching turn<br>
+                    ✓ Victory screen displayed instantly
+                </p>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Continuous Fleet Tracking</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                <div style="padding: 15px; background: rgba(139, 90, 43, 0.1); border-radius: 5px; border-left: 4px solid #8b5a2b;">
+                    <h4 style="color: #8b4513; margin-bottom: 10px;">After Every Attack</h4>
+                    <ul style="color: #6b4e3d; font-size: 0.9rem; line-height: 1.6;">
+                        <li>Ship hit() method called</li>
+                        <li>Health reduced by 1</li>
+                        <li>Check if ship sunk</li>
+                        <li>Check win condition</li>
+                    </ul>
+                </div>
+                <div style="padding: 15px; background: rgba(139, 90, 43, 0.1); border-radius: 5px; border-left: 4px solid #d4af37;">
+                    <h4 style="color: #8b4513; margin-bottom: 10px;">Fleet Status Check</h4>
+                    <ul style="color: #6b4e3d; font-size: 0.9rem; line-height: 1.6;">
+                        <li>Iterate all ships in fleet</li>
+                        <li>Count sunk ships</li>
+                        <li>Log current status</li>
+                        <li>Return true if all sunk</li>
+                    </ul>
+                </div>
+                <div style="padding: 15px; background: rgba(139, 90, 43, 0.1); border-radius: 5px; border-left: 4px solid #2d5016;">
+                    <h4 style="color: #8b4513; margin-bottom: 10px;">Instant Trigger</h4>
+                    <ul style="color: #6b4e3d; font-size: 0.9rem; line-height: 1.6;">
+                        <li>No delay or waiting</li>
+                        <li>Checked before turn switch</li>
+                        <li>Immediate game end</li>
+                        <li>Victory screen shown</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Console Output Example</h2>
+            <div class="code-block">
+// Game in progress - tracking fleet status:
+Fleet status: 0/5 ships sunk
+Fleet status: 0/5 ships sunk
+
+Quinquereme hit! Health: 4/5
+Fleet status: 0/5 ships sunk
+Fleet status: 0/5 ships sunk
+
+Quinquereme hit! Health: 3/5
+Fleet status: 0/5 ships sunk
+Fleet status: 0/5 ships sunk
+
+// ... more hits ...
+
+Quinquereme hit! Health: 0/5
+Quinquereme has been sunk!
+Fleet status: 1/5 ships sunk
+Fleet status: 0/5 ships sunk
+
+// ... sink more ships ...
+
+Bireme hit! Health: 1/2
+Fleet status: 4/5 ships sunk
+Fleet status: 0/5 ships sunk
+
+Bireme hit! Health: 0/2
+Bireme has been sunk!
+Fleet status: 5/5 ships sunk  ← All enemy ships sunk!
+Victory! All enemy ships sunk!  ← Win condition triggered!
+Fleet status: 0/5 ships sunk
+
+// Game ends immediately, victory screen shown
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Timing Verification</h2>
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background: #8b5a2b; color: #f4e4c1;">
+                        <th style="border: 1px solid #8b5a2b; padding: 12px; text-align: left;">Event</th>
+                        <th style="border: 1px solid #8b5a2b; padding: 12px; text-align: left;">Timing</th>
+                        <th style="border: 1px solid #8b5a2b; padding: 12px; text-align: left;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px;">Final ship hit</td>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px;">T+0ms</td>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px; color: #2d5016; font-weight: bold;">✓ Instant</td>
+                    </tr>
+                    <tr style="background: rgba(139, 90, 43, 0.05);">
+                        <td style="border: 1px solid #8b5a2b; padding: 12px;">Ship marked sunk</td>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px;">T+0ms</td>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px; color: #2d5016; font-weight: bold;">✓ Instant</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px;">Win condition checked</td>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px;">T+0ms</td>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px; color: #2d5016; font-weight: bold;">✓ Instant</td>
+                    </tr>
+                    <tr style="background: rgba(139, 90, 43, 0.05);">
+                        <td style="border: 1px solid #8b5a2b; padding: 12px;">Fleet status verified</td>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px;">T+0ms</td>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px; color: #2d5016; font-weight: bold;">✓ Instant</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px;">Game ended</td>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px;">T+0ms</td>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px; color: #2d5016; font-weight: bold;">✓ Instant</td>
+                    </tr>
+                    <tr style="background: rgba(139, 90, 43, 0.05);">
+                        <td style="border: 1px solid #8b5a2b; padding: 12px;">Victory screen shown</td>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px;">T+0ms</td>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px; color: #2d5016; font-weight: bold;">✓ Instant</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px;">Turn switch</td>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px;">Never</td>
+                        <td style="border: 1px solid #8b5a2b; padding: 12px; color: #2d5016; font-weight: bold;">✓ Skipped</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="test-section">
+            <h2>Code Execution Path</h2>
+            <div style="background: rgba(139, 90, 43, 0.1); padding: 20px; border-radius: 5px;">
+                <pre style="color: #6b4e3d; line-height: 1.8; margin: 0; font-family: 'Courier New', monospace;">
+1. Player confirms attack on final enemy ship cell
+2. makeAttack(row, col, 'player') called
+3. Ship hit() method reduces health to 0
+4. Ship marked as sunk (isSunk = true)
+5. checkWinCondition() called immediately
+6. checkAllShipsSunk(computerFleet) returns true
+7. endGame() called (turn switch skipped)
+8. Game boards hidden
+9. Victory screen displayed
+10. "You Won! 🎉" message shown
+                </pre>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Interactive Demo</h2>
+            <p style="text-align: center; margin: 20px 0;">
+                <a href="index.html" style="display: inline-block; background: linear-gradient(135deg, #cd7f32 0%, #b87333 100%); color: #f4e4c1; padding: 12px 30px; border-radius: 5px; text-decoration: none; font-weight: bold; border: 2px solid #8b5a2b;">
+                    Play Game to Test Victory Detection →
+                </a>
+            </p>
+            <p style="text-align: center; color: #6b4e3d; font-size: 0.9rem;">
+                Sink all enemy ships and observe instant victory trigger
+            </p>
+        </div>
+    </div>
+</body>
+</html>

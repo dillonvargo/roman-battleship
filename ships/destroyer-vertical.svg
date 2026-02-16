@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="100.0 -100.0 100 300" width="100" height="300">
+  <g transform="rotate(90, 150.0, 50.0)">
+
+  <!-- Destroyer (3 cells) - Trireme - Realistic Roman Warship -->
+  
+  <!-- Lower Hull (curved bottom) -->
+  <path d="M 20 75 Q 150 90 280 75 L 280 70 Q 150 80 20 70 Z" fill="#6b3410" stroke="#4a2508" stroke-width="2"/>
+  
+  <!-- Main Hull -->
+  <path d="M 15 70 L 285 70 L 270 55 L 30 55 Z" fill="#8b4513" stroke="#5d2f0e" stroke-width="2"/>
+  
+  <!-- Hull planks detail -->
+  <line x1="30" y1="58" x2="270" y2="58" stroke="#5d2f0e" stroke-width="1" opacity="0.5"/>
+  <line x1="30" y1="63" x2="270" y2="63" stroke="#5d2f0e" stroke-width="1" opacity="0.5"/>
+  <line x1="30" y1="68" x2="270" y2="68" stroke="#5d2f0e" stroke-width="1" opacity="0.5"/>
+  
+  <!-- Deck -->
+  <rect x="30" y="50" width="240" height="5" fill="#a0522d" stroke="#5d2f0e" stroke-width="1"/>
+  
+  <!-- Bow ornament -->
+  <path d="M 15 70 Q 10 65 12 55 L 30 55" fill="#8b4513" stroke="#5d2f0e" stroke-width="2"/>
+  <circle cx="12" cy="58" r="3" fill="#cd7f32"/>
+  
+  <!-- Stern ornament -->
+  <path d="M 285 70 Q 290 65 288 55 L 270 55" fill="#8b4513" stroke="#5d2f0e" stroke-width="2"/>
+  
+  <!-- Masts with sails (3 sails for 3 cells) -->
+  <g id="mast1">
+    <line x1="80" y1="50" x2="80" y2="15" stroke="#5d2f0e" stroke-width="2"/>
+    <path d="M 80 18 Q 95 28 80 45" fill="#e8d4a8" stroke="#8b7355" stroke-width="1"/>
+  </g>
+  <g id="mast2">
+    <line x1="150" y1="50" x2="150" y2="12" stroke="#5d2f0e" stroke-width="2.5"/>
+    <path d="M 150 15 Q 168 26 150 45" fill="#e8d4a8" stroke="#8b7355" stroke-width="1"/>
+  </g>
+  <g id="mast3">
+    <line x1="220" y1="50" x2="220" y2="15" stroke="#5d2f0e" stroke-width="2"/>
+    <path d="M 220 18 Q 235 28 220 45" fill="#e8d4a8" stroke="#8b7355" stroke-width="1"/>
+  </g>
+  
+  <!-- Oars -->
+  <g opacity="0.8">
+    <line x1="70" y1="72" x2="55" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+    <line x1="150" y1="72" x2="135" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+    <line x1="230" y1="72" x2="215" y2="80" stroke="#5d2f0e" stroke-width="2"/>
+  </g>
+
+  </g>
+</svg>
