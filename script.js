@@ -587,6 +587,8 @@ class BattleshipGame {
         document.getElementById('restart-game').addEventListener('click', () => this.restartGame());
         document.getElementById('confirm-attack').addEventListener('click', () => this.confirmAttack());
         document.getElementById('cancel-attack').addEventListener('click', () => this.cancelAttack());
+        document.getElementById('mid-game-restart').addEventListener('click', () => this.handleMidGameRestart());
+        document.getElementById('mid-game-home').addEventListener('click', () => this.handleMidGameHome());
     }
     
     createBoards() {
@@ -1686,6 +1688,28 @@ class BattleshipGame {
         console.log(`Ram accuracy: ${accuracy}%`);
     }
     
+    handleMidGameRestart() {
+        if (!this.gameStarted) return;
+        
+        if (!confirm('Restart the battle? Current progress will be lost.')) return;
+        
+        this.restartGame();
+    }
+
+    handleMidGameHome() {
+        if (!this.gameStarted) return;
+        
+        if (!confirm('Return to harbor? Current battle will be abandoned.')) return;
+        
+        this.gameStarted = false;
+        this.placementConfirmed = false;
+        
+        document.getElementById('game-setup').style.display = 'block';
+        document.getElementById('game-boards').style.display = 'none';
+        document.getElementById('attack-confirmation').style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
     restartGame() {
         this.playerBoard = this.createEmptyBoard();
         this.computerBoard = this.createEmptyBoard();
