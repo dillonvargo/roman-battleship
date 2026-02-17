@@ -835,22 +835,6 @@ button:disabled {
     box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
 }
 
-.cell.selected-attack {
-    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
-    border-color: #d4af37;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-    z-index: 10;
-    animation: pulse-selection 1s ease-in-out infinite;
-}
-
-@keyframes pulse-selection {
-    0%, 100% {
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-    }
-    50% {
-        box-shadow: 0 0 30px rgba(255, 215, 0, 1);
-    }
-}
 
 .cell.ship {
     background: linear-gradient(135deg, #6b4e3d 0%, #8b5a2b 50%, #6b4e3d 100%);
@@ -1286,73 +1270,6 @@ button:disabled {
         repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 0, 0, 0.1) 5px, rgba(255, 0, 0, 0.1) 10px);
 }
 
-.attack-confirmation {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    background: linear-gradient(135deg, #f4e4c1 0%, #e8d4a8 100%);
-    border: 3px solid #8b5a2b;
-    border-radius: 8px;
-    padding: 20px 30px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    text-align: center;
-    max-width: 400px;
-}
-
-.attack-confirmation p {
-    color: #8b4513;
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-#selected-coordinate {
-    color: #ffd700;
-    font-size: 1.4rem;
-    letter-spacing: 2px;
-}
-
-.attack-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-}
-
-.confirm-btn, .cancel-btn {
-    padding: 10px 25px;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-.confirm-btn {
-    background: linear-gradient(135deg, #2d5016 0%, #3d6b1f 100%);
-    color: #f4e4c1;
-    border: 2px solid #1a3009;
-}
-
-.confirm-btn:hover {
-    background: linear-gradient(135deg, #3d6b1f 0%, #4d7b2f 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-}
-
-.cancel-btn {
-    background: linear-gradient(135deg, #8b3a3a 0%, #a04a4a 100%);
-    color: #f4e4c1;
-    border: 2px solid #6b2a2a;
-}
-
-.cancel-btn:hover {
-    background: linear-gradient(135deg, #a04a4a 0%, #b05a5a 100%);
-    transform: translateY(-2px);
-}
 
 .mid-game-controls {
     display: flex;
