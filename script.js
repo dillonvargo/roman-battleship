@@ -1167,7 +1167,7 @@ class BattleshipGame {
         document.body.style.overflow = '';
     }
     
-    copyShipsToPlayerBoard(){
+    copyShipsToPlayerBoard() {
         Object.keys(this.playerFleet).forEach(shipType => {
             const ship = this.playerFleet[shipType];
             if (ship.occupiedCells.length > 0) {
@@ -1577,7 +1577,7 @@ class BattleshipGame {
         document.getElementById('game-over').style.display = 'flex';
         document.body.style.overflow = '';
         
-        const gameOverEl= document.getElementById('game-over');
+        const gameOverEl = document.getElementById('game-over');
         const resultEl = document.getElementById('game-result');
         const subtextEl = document.getElementById('victory-subtext');
         
