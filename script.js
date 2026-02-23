@@ -1270,6 +1270,7 @@ class BattleshipGame {
                     this.playSunkCelebration(ship, 'computer-board');
                     this.displayAttackFeedback(`${ship.romanName} Destroyed!`, 'sunk');
                     this.sound.sunk();
+                    this._lastAttackWasSunk = true;
                 } else {
                     this.displayAttackFeedback('Ram Strike!', 'hit');
                     this.sound.hit();
@@ -1497,7 +1498,9 @@ class BattleshipGame {
             this.currentTurn === 'player' ? 'Your Command' : 'Enemy Maneuvers';
         
         if (this.currentTurn === 'computer') {
-            setTimeout(() => this.computerAttack(), 1000);
+            const delay = this._lastAttackWasSunk ? 4500 : 2000;
+            this._lastAttackWasSunk = false;
+            setTimeout(() => this.computerAttack(), delay);
         }
     }
     
