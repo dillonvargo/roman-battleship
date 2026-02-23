@@ -1164,7 +1164,7 @@ class BattleshipGame {
         
         document.getElementById('game-setup').style.display = 'none';
         document.getElementById('game-boards').style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = '';
     }
     
     copyShipsToPlayerBoard() {
@@ -1575,7 +1575,7 @@ class BattleshipGame {
         // Hide game boards and show end screen
         document.getElementById('game-boards').style.display = 'none';
         document.getElementById('game-over').style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = '';
         
         const gameOverEl = document.getElementById('game-over');
         const resultEl = document.getElementById('game-result');
