@@ -1626,4 +1626,18 @@ button:disabled {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
+
+    .mid-game-controls {
+        flex-wrap: wrap;
+    }
+
+    .mid-game-btn {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+    }
+
+    .restart-btn {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
 }
