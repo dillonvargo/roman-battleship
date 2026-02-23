@@ -715,6 +715,20 @@ button:disabled {
     justify-content: center;
     align-items: flex-start;
     width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 300px);
+}
+
+.setup-content {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-width: 100%;
+}
+
+.board-wrapper {
+    min-width: min-content;
 }
 
 .board-container {
@@ -1606,5 +1620,10 @@ button:disabled {
     .game-info {
         flex-direction: column;
         gap: 15px;
+    }
+    
+    .boards-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 }
