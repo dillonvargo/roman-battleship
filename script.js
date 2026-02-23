@@ -1471,8 +1471,8 @@ class BattleshipGame {
         feedbackEl.style.display = 'block';
         
         // Fade out then hide (sunk banners stay longer)
-        const fadeDelay = type === 'sunk' ? 3000 : 1500;
-        const hideDelay = type === 'sunk' ? 3400 : 1900;
+        const fadeDelay = type === 'sunk' ? 3500 : 1500;
+        const hideDelay = type === 'sunk' ? 3900 : 1900;
         
         this._bannerFadeTimeout = setTimeout(() => {
             feedbackEl.classList.add('fading');
