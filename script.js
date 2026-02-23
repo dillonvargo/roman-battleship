@@ -560,25 +560,6 @@ class BattleshipGame {
                 if (volLabel) volLabel.textContent = slider.value + '%';
             });
         }
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'm' || e.key === 'M') {
-                this.sound.setEnabled(!this.sound.enabled);
-                if (toggle) toggle.checked = this.sound.enabled;
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                const newVol = Math.min(100, Math.round(this.sound.volume * 100) + 10);
-                this.sound.setVolume(newVol / 100);
-                if (slider) slider.value = newVol;
-                if (volLabel) volLabel.textContent = newVol + '%';
-            } else if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                const newVol = Math.max(0, Math.round(this.sound.volume * 100) - 10);
-                this.sound.setVolume(newVol / 100);
-                if (slider) slider.value = newVol;
-                if (volLabel) volLabel.textContent = newVol + '%';
-            }
-        });
     }
     
     initializeEventListeners() {
@@ -1491,8 +1472,8 @@ class BattleshipGame {
         feedbackEl.style.display = 'block';
         
         // Fade out then hide (sunk banners stay longer)
-        const fadeDelay = type === 'sunk' ? 2000 : 1500;
-        const hideDelay = type === 'sunk' ? 2400 : 1900;
+        const fadeDelay = type === 'sunk' ? 2000 : 1000;
+        const hideDelay = type === 'sunk' ? 2400 : 1400;
         
         this._bannerFadeTimeout = setTimeout(() => {
             feedbackEl.classList.add('fading');
