@@ -1412,7 +1412,7 @@ class BattleshipGame {
                         const adj = document.querySelector(`#${boardId} .cell[data-row="${nr}"][data-col="${nc}"]`);
                         if (adj) {
                             adj.classList.add('sunk-ripple');
-                            setTimeout(() => adj.classList.remove('sunk-ripple'), 700);
+                            setTimeout(() => adj.classList.remove('sunk-ripple'), 1200);
                         }
                     }
                 }
@@ -1470,15 +1470,18 @@ class BattleshipGame {
         feedbackEl.classList.add(type);
         feedbackEl.style.display = 'block';
         
-        // Fade out after 1.5s, then hide
+        // Fade out then hide (sunk banners stay longer)
+        const fadeDelay = type === 'sunk' ? 3000 : 1500;
+        const hideDelay = type === 'sunk' ? 3400 : 1900;
+        
         this._bannerFadeTimeout = setTimeout(() => {
             feedbackEl.classList.add('fading');
-        }, 1500);
+        }, fadeDelay);
         
         this._bannerTimeout = setTimeout(() => {
             feedbackEl.style.display = 'none';
             feedbackEl.className = 'attack-feedback';
-        }, 1900);
+        }, hideDelay);
     }
     
     switchTurn() {
