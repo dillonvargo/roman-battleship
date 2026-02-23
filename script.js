@@ -1472,8 +1472,8 @@ class BattleshipGame {
         feedbackEl.style.display = 'block';
         
         // Fade out then hide (sunk banners stay longer)
-        const fadeDelay = type === 'sunk' ? 3500 : 1500;
-        const hideDelay = type === 'sunk' ? 3900 : 1900;
+        const fadeDelay = type === 'sunk' ? 2000 : 1500;
+        const hideDelay = type === 'sunk' ? 2400 : 1900;
         
         this._bannerFadeTimeout = setTimeout(() => {
             feedbackEl.classList.add('fading');
@@ -1498,7 +1498,7 @@ class BattleshipGame {
             this.currentTurn === 'player' ? 'Your Command' : 'Enemy Maneuvers';
         
         if (this.currentTurn === 'computer') {
-            const delay = this._lastAttackWasSunk ? 4500 : 2000;
+            const delay = this._lastAttackWasSunk ? 3000 : 2000;
             this._lastAttackWasSunk = false;
             setTimeout(() => this.computerAttack(), delay);
         }
